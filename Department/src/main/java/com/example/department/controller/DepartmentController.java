@@ -5,10 +5,7 @@ import com.example.department.entity.Department;
 import com.example.department.service.DepartmentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/department")
@@ -24,5 +21,11 @@ public class DepartmentController {
     public ResponseEntity<DepartmentDTO> createDepartment(@RequestBody DepartmentDTO departmentDTO){
         DepartmentDTO departmentDTO1 = departmentService.createDepartment(departmentDTO);
         return new ResponseEntity<>(departmentDTO1, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/getDepartment/{departmentCode}")
+    public ResponseEntity<DepartmentDTO> getDepartment(@PathVariable("departmentCode") String departmentCode){
+        DepartmentDTO departmentDTO = departmentService.getDepartmentByCode(departmentCode);
+        return new ResponseEntity<>(departmentDTO,HttpStatus.OK);
     }
 }
