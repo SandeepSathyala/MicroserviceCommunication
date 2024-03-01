@@ -5,6 +5,8 @@
     <option name="originalFiles">
       <list>
         <option value="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-dependencies/3.2.3/spring-boot-dependencies-3.2.3.pom" />
+        <option value="$PROJECT_DIR$/Department/pom.xml" />
+        <option value="$PROJECT_DIR$/Employee/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
