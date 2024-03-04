@@ -1,23 +1,31 @@
 Microservices Communication
-----------------------------------
-1.RestTemplate
-2.WebClient
-3.FiegnClient
+-----------------------------
 
-using RestTemplate
--------------------
-RestTemplate is a class provided by the Spring Framework that simplifies the process of making HTTP requests to RESTful web services. It abstracts away much of the complexity of working directly with the Java URLConnection API or other HTTP client libraries.
+This project demonstrates different options for communication between microservices in a Spring Boot application. The following communication methods are explored:
 
-With RestTemplate, you can perform various HTTP methods such as GET, POST, PUT, DELETE, etc., and handle the responses easily.
+1. RestTemplate
+2. WebClient
+3. FeignClient
 
-Requirements(RestTemplate)
---------------------------------
--> Consider Employe belongs to department and employee has a unique department code.     
--> Chanage Get EMployee RestAPI return Employee along with it's department in response.
+1. RestTemplate
+----------------
+RestTemplate is a synchronous HTTP client for making HTTP requests to external services or APIs. It is part of the Spring framework and provides a straightforward way to communicate with RESTful services. However, it can be blocking and less efficient in handling concurrent requests compared to reactive alternatives.
+To use RestTemplate, you can simply create an instance and make HTTP requests using methods like `getForObject()` or `postForObject()`.
 
-Development Steps
--------------------
--> Add departmentCode field in Employee JPA Entity.       
--> Create DepartmentDto Class.                        
--> Configure RestTemplate as spring Bean.                       
--> Inject and Use RestTemplate to make RESTAPi call in EmployeeService class.                    
+2. WebClient
+----------------
+WebClient is a non-blocking, reactive web client introduced in Spring WebFlux. It provides a more efficient way to make HTTP requests compared to RestTemplate, especially in reactive applications. WebClient supports both synchronous and asynchronous request/response handling and integrates well with reactive streams.
+To use WebClient, you can create an instance and build requests using a fluent API. It offers methods like `get()`, `post()`, and `exchange()` for making different types of HTTP requests.
+
+3. FeignClient
+-----------------
+FeignClient is part of the Spring Cloud Netflix project and provides a declarative way to create REST clients. It allows you to define interfaces annotated with special annotations that describe how to interact with other RESTful services. FeignClient handles the HTTP requests and responses, including serialization and deserialization of data.
+To use FeignClient, you define an interface with method signatures corresponding to the REST endpoints of the external service. FeignClient generates proxy implementations of these interfaces, making it easy to consume RESTful services in a concise and readable manner.
+Choose the appropriate communication method based on your application requirements, considering factors like performance, concurrency, and ease of use.
+
+Usage
+--------
+
+You can use any of the mentioned communication methods in your Spring Boot application based on your specific use case. Each method has its advantages and trade-offs, so choose the one that best fits your requirements.
+Ensure that you include the necessary dependencies in your project's `pom.xml` or `build.gradle` file to use RestTemplate, WebClient, or FeignClient effectively.
+
