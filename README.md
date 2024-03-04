@@ -7,6 +7,8 @@ This project demonstrates different options for communication between microservi
 2. WebClient
 3. FeignClient
 
+
+
 1. RestTemplate
 ----------------
 RestTemplate is a synchronous HTTP client for making HTTP requests to external services or APIs. It is part of the Spring framework and provides a straightforward way to communicate with RESTful services. However, it can be blocking and less efficient in handling concurrent requests compared to reactive alternatives.
