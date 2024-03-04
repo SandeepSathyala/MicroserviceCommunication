@@ -1,5 +1,6 @@
 package com.example.employee.controller;
 
+import com.example.employee.dto.APIResponseDTO;
 import com.example.employee.dto.EmployeeDTO;
 import com.example.employee.service.EmployeeService;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,8 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployeeDTO);
     }
     @GetMapping("/getEmployee/{employeeId}")
-    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable("employeeId") Long id){
-        EmployeeDTO employeeDTO = employeeService.getEmployeeById(id);
-        return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
+    public ResponseEntity<APIResponseDTO> getEmployeeId(@PathVariable("employeeId") Long id){
+        APIResponseDTO apiResponseDTO = employeeService.getEmployeeById(id);
+        return new ResponseEntity<>(apiResponseDTO, HttpStatus.OK);
     }
 }

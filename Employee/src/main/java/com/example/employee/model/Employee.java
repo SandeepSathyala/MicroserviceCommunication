@@ -1,13 +1,12 @@
 package com.example.employee.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = "employee")
 public class Employee {
@@ -17,7 +16,6 @@ public class Employee {
     private long id;
     private String firstName;
     private String lastName;
-
     @Column(nullable = false, unique = true)
     private String email;
     private String departmentCode;

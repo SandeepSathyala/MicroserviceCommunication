@@ -1,9 +1,11 @@
 package com.example.employee.service;
 
+import com.example.employee.dto.APIResponseDTO;
 import com.example.employee.dto.DepartmentDto;
 import com.example.employee.dto.EmployeeDTO;
 import com.example.employee.model.Employee;
 import com.example.employee.repository.EmployeeRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class EmployeeService {
     private final EmployeeRepo employeeRepo;
+    @Autowired
     private RestTemplate restTemplate;
 
     public EmployeeService(EmployeeRepo employeeRepo) {
@@ -36,11 +39,14 @@ public class EmployeeService {
         return savedEmployeeDTO;
     }
 
-    public EmployeeDTO getEmployeeById(Long id){
+    public APIResponseDTO getEmployeeById(Long id) {
         Employee employee = employeeRepo.findById(id).get();
 
-       ResponseEntity<DepartmentDto> responseEntity = restTemplate.getForEntity("localhost:8080/api/department/getDepartment/"+ employee.getDepartmentCode(), DepartmentDto.class);
-       DepartmentDto departmentDto =  responseEntity.getBody();
+        String departmentUrl = "http://localhost:8080/api/department/getDepartment/" + employee.getDepartmentCode();
+
+        ResponseEntity<DepartmentDto> responseEntity = restTemplate.getForEntity(departmentUrl, DepartmentDto.class);
+        DepartmentDto departmentDto = responseEntity.getBody();
+
         EmployeeDTO employeeDTO = new EmployeeDTO(
                 employee.getId(),
                 employee.getFirstName(),
@@ -48,6 +54,11 @@ public class EmployeeService {
                 employee.getEmail(),
                 employee.getDepartmentCode()
         );
-        return employeeDTO;
+
+        APIResponseDTO apiResponseDTO = new APIResponseDTO();
+        apiResponseDTO.setEmployee(employeeDTO);
+        apiResponseDTO.setDepartment(departmentDto);
+        return apiResponseDTO;
     }
+
 }
