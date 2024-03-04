@@ -13,7 +13,7 @@ Requirements(RestTemplate)
 
 Development Steps
 -------------------
--> Add departmentCode field in Employee JPA Entity.
--> Create DepartmentDto Class.
--> Configure RestTemplate as spring Bean.
--> Inject and Use RestTemplate to make RESTAPi call in EmployeeService class.
+-> Add departmentCode field in Employee JPA Entity.       
+-> Create DepartmentDto Class.                        
+-> Configure RestTemplate as spring Bean.                       
+-> Inject and Use RestTemplate to make RESTAPi call in EmployeeService class.                    
