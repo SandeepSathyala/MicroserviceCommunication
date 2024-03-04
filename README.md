@@ -8,7 +8,7 @@ using RestTemplate
 -------------------
 Requirements(RestTemplate)
 --------------------------------
--> Consider Employe belongs to department and employee has a unique department code.
+-> Consider Employe belongs to department and employee has a unique department code.     
 -> Chanage Get EMployee RestAPI return Employee along with it's department in response.
 
 Development Steps
