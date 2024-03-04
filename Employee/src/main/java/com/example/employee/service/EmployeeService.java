@@ -19,8 +19,11 @@ public class EmployeeService {
 //    private RestTemplate restTemplate;
 
 //    weClient
+//    @Autowired
+//    private WebClient webClient;
+
     @Autowired
-    private WebClient webClient;
+    private  APIClient apiClient;
 
     public EmployeeService(EmployeeRepo employeeRepo) {
         this.employeeRepo = employeeRepo;
@@ -70,14 +73,33 @@ public class EmployeeService {
 
 
 //    WebClient
+//    public APIResponseDTO getEmployeeById(Long id) {
+//        Employee employee = employeeRepo.findById(id).get();
+//      DepartmentDto departmentDto =  webClient.get()
+//                .uri("http://localhost:8080/api/department/getDepartment/" + employee.getDepartmentCode())
+//                .retrieve()
+//                .bodyToMono(DepartmentDto.class)
+//                .block();
+//
+//        EmployeeDTO employeeDTO = new EmployeeDTO(
+//                employee.getId(),
+//                employee.getFirstName(),
+//                employee.getLastName(),
+//                employee.getEmail(),
+//                employee.getDepartmentCode()
+//        );
+//
+//        APIResponseDTO apiResponseDTO = new APIResponseDTO();
+//        apiResponseDTO.setEmployee(employeeDTO);
+//        apiResponseDTO.setDepartment(departmentDto);
+//        return apiResponseDTO;
+//    }
+
+
+//    FeignClient
     public APIResponseDTO getEmployeeById(Long id) {
         Employee employee = employeeRepo.findById(id).get();
-      DepartmentDto departmentDto =  webClient.get()
-                .uri("http://localhost:8080/api/department/getDepartment/" + employee.getDepartmentCode())
-                .retrieve()
-                .bodyToMono(DepartmentDto.class)
-                .block();
-
+        DepartmentDto departmentDto = apiClient.getDepartment(employee.getDepartmentCode());
         EmployeeDTO employeeDTO = new EmployeeDTO(
                 employee.getId(),
                 employee.getFirstName(),
@@ -85,7 +107,6 @@ public class EmployeeService {
                 employee.getEmail(),
                 employee.getDepartmentCode()
         );
-
         APIResponseDTO apiResponseDTO = new APIResponseDTO();
         apiResponseDTO.setEmployee(employeeDTO);
         apiResponseDTO.setDepartment(departmentDto);
