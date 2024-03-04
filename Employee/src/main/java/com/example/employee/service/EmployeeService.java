@@ -9,12 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class EmployeeService {
     private final EmployeeRepo employeeRepo;
+
+//    @Autowired
+//    private RestTemplate restTemplate;
+
+//    weClient
     @Autowired
-    private RestTemplate restTemplate;
+    private WebClient webClient;
 
     public EmployeeService(EmployeeRepo employeeRepo) {
         this.employeeRepo = employeeRepo;
@@ -39,13 +45,38 @@ public class EmployeeService {
         return savedEmployeeDTO;
     }
 
+    //using RestTemplate
+//    public APIResponseDTO getEmployeeById(Long id) {
+//        Employee employee = employeeRepo.findById(id).get();
+//
+//        String departmentUrl = "http://localhost:8080/api/department/getDepartment/" + employee.getDepartmentCode();
+//
+//        ResponseEntity<DepartmentDto> responseEntity = restTemplate.getForEntity(departmentUrl, DepartmentDto.class);
+//        DepartmentDto departmentDto = responseEntity.getBody();
+//
+//        EmployeeDTO employeeDTO = new EmployeeDTO(
+//                employee.getId(),
+//                employee.getFirstName(),
+//                employee.getLastName(),
+//                employee.getEmail(),
+//                employee.getDepartmentCode()
+//        );
+//
+//        APIResponseDTO apiResponseDTO = new APIResponseDTO();
+//        apiResponseDTO.setEmployee(employeeDTO);
+//        apiResponseDTO.setDepartment(departmentDto);
+//        return apiResponseDTO;
+//    }
+
+
+//    WebClient
     public APIResponseDTO getEmployeeById(Long id) {
         Employee employee = employeeRepo.findById(id).get();
-
-        String departmentUrl = "http://localhost:8080/api/department/getDepartment/" + employee.getDepartmentCode();
-
-        ResponseEntity<DepartmentDto> responseEntity = restTemplate.getForEntity(departmentUrl, DepartmentDto.class);
-        DepartmentDto departmentDto = responseEntity.getBody();
+      DepartmentDto departmentDto =  webClient.get()
+                .uri("http://localhost:8080/api/department/getDepartment/" + employee.getDepartmentCode())
+                .retrieve()
+                .bodyToMono(DepartmentDto.class)
+                .block();
 
         EmployeeDTO employeeDTO = new EmployeeDTO(
                 employee.getId(),
